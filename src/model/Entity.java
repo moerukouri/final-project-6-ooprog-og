@@ -10,10 +10,21 @@ public abstract class Entity {
         this.createdAt = createdAt;
     }
 
-    protected String getID() {
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getID() {
         return this.id;
     }
-    protected LocalDateTime getCreatedAt() {
+
+    public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
+
+    public abstract String toJson();
 }
