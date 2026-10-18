@@ -5,7 +5,7 @@ public class FileStorageException extends PharmacyException {
         super("Error: An error occured while performing data storage actions.");
     }
 
-    public FileStorageException(String operation, String filePath) {
+    public FileStorageException(String operation, String filePath, Throwable cause) {
         super(String.format("Error: Failed to %s file at %s.", operation, filePath));
     }
 }
