@@ -2,10 +2,10 @@ package model;
 import java.time.LocalDateTime;
 
 public abstract class User extends Entity {
-    private String username;
-    private String passwordHash;
-    private String fullName;   
-    private Role role;
+    private final String username;
+    private final String passwordHash;
+    private final String fullName;   
+    private final Role role;
     private boolean status;
 
     protected User(String id, LocalDateTime createdAt, String username, String passwordHash, String fullName, Role role, boolean status) {

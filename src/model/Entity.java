@@ -25,6 +25,4 @@ public abstract class Entity {
     public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
-
-    public abstract String toJson();
 }
