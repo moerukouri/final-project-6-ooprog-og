@@ -20,11 +20,11 @@ public abstract class User extends Entity {
     }
 
     public String toTextRow() {
-        return String.join(",", getID(), getCreatedAt().toString(), username, passwordHash, fullName, role.name(), String.valueOf(status));
+        return String.join("|", getID(), getCreatedAt().toString(), username, passwordHash, fullName, role.name(), String.valueOf(status));
     }
 
     public static User fromTextRow(String row) {
-        String[] parts = row.split(",");
+        String[] parts = row.split("\\|");
         if (parts.length >= 7) {
             String id = parts[0];
             LocalDateTime createdAt = LocalDateTime.parse(parts[1]);

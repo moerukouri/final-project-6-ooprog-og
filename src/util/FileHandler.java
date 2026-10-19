@@ -64,6 +64,22 @@ public class FileHandler {
         }
     }
 
+    public static String retrieveLine(String toFind, int index, String filePath) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                if (line.split("\\|")[index].equals(toFind)) {
+                    return line;
+                }
+            }
+
+            return null;
+        } catch (IOException e) {
+            throw new FileStorageException(OperationType.RETRIEVE.getOperation(), filePath);
+        }
+    }
+
     public static void delete(String lineToDelete, String filePath) {
         final ArrayList<String> lines = retrieve(filePath);
 
