@@ -1,12 +1,12 @@
 package util;
+import exception.FileStorageException;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import exception.FileStorageException;
+import java.util.List;
 
 public class FileHandler {
     public static boolean findID(String id, String filePath) {
@@ -34,19 +34,28 @@ public class FileHandler {
         }
     }
 
-    public static void update(String lineToUpdate, String newLine, String filePath) {
+    public static void writeAll(List<String> lines, String filePath){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))){
+            for(String line : lines){
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e){
+                throw new FileStorageException(OperationType.WRITE.getOperation(), filePath);
+        }
+    }
+
+    public static boolean update(String lineToUpdate, String newLine, String filePath) {
         final ArrayList<String> lines = retrieve(filePath);
 
-        for (String line : lines) {
-            if (line.equals(lineToUpdate)) {
-                line = lineToUpdate;
-                break;
+        for (int i = 0; i < lines.size(); i++) {
+            if (lines.get(i).equals(lineToUpdate)) {
+                lines.set(i, newLine);
+                writeAll(lines, filePath);
+                return true;
             }
         }
-
-        for (String line : lines) {
-            write(line, filePath, lines.indexOf(line) != 0);
-        }
+        return false;
     }
 
     public static ArrayList<String> retrieve(String filePath) {
@@ -69,6 +78,8 @@ public class FileHandler {
             String line;
 
             while ((line = reader.readLine()) != null) {
+                if (line.isBlank()) continue;
+                
                 if (line.split("\\|")[index].equals(toFind)) {
                     return line;
                 }
@@ -80,18 +91,13 @@ public class FileHandler {
         }
     }
 
-    public static void delete(String lineToDelete, String filePath) {
+    public static boolean delete(String lineToDelete, String filePath) {
         final ArrayList<String> lines = retrieve(filePath);
 
-        for (String line : lines) {
-            if (line.equals(lineToDelete)) {
-                lines.remove(lineToDelete);
-                break;
-            }
+        if(lines.remove(lineToDelete)){
+            writeAll(lines, filePath);
+            return true;
         }
-
-        for (String line : lines) {
-            write(line, filePath, lines.indexOf(line) != 0);
-        }
+        return false;
     }
 }
