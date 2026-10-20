@@ -4,23 +4,23 @@ import java.time.LocalDateTime;
 
 public abstract class User extends Entity {
     private final String username;
-    private final String passwordHash;
+    private final String password;
     private final String fullName;   
     private final Role role;
     private boolean status;
 
-    protected User(String id, LocalDateTime createdAt, String username, String passwordHash, String fullName, Role role, boolean status) {
+    protected User(String id, LocalDateTime createdAt, String username, String password, String fullName, Role role, boolean status) {
         super(id, createdAt);
 
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.fullName = fullName;
         this.role = role;
         this.status = status;
     }
 
     public String toTextRow() {
-        return String.join("|", getID(), getCreatedAt().toString(), username, passwordHash, fullName, role.name(), String.valueOf(status));
+        return String.join("|", getID(), getCreatedAt().toString(), username, password, fullName, role.name(), String.valueOf(status));
     }
 
     public static User fromTextRow(String row) {
