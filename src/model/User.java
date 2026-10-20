@@ -25,22 +25,12 @@ public abstract class User extends Entity {
 
     public static User fromTextRow(String row) {
         String[] parts = row.split("\\|");
-        if (parts.length >= 7) {
-            String id = parts[0];
-            LocalDateTime createdAt = LocalDateTime.parse(parts[1]);
-            String username = parts[2];
-            String passwordHash = parts[3];
-            String fullName = parts[4];
-            String roleStr = parts[5];
-            boolean status = Boolean.parseBoolean(parts[6]);
-
-            if ("ADMIN".equals(roleStr)) {
-                return new Admin(id, createdAt, username, passwordHash, fullName, status);
-            } else if ("STAFF".equals(roleStr)) {
-                return new Staff(id, createdAt, username, passwordHash, fullName, status);
-            }
+        if (parts.length != 7) {
+            return null;
         }
-        return null;
+
+        Role role = Role.valueOf(parts[5]);
+        return role.createUser(parts[0], LocalDateTime.parse(parts[1]), parts[2], parts[3], parts[4], Boolean.parseBoolean(parts[6]));
     }
 
     public void setAccountStatus(boolean status) { this.status = status; }

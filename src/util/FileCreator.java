@@ -1,8 +1,7 @@
 package util;
+import exception.FileStorageException;
 import java.io.File;
 import java.io.IOException;
-
-import exception.FileStorageException;
 
 public class FileCreator {
     private FileCreator() {} 
@@ -11,6 +10,7 @@ public class FileCreator {
     private static final String usersPath = FilePath.USERS_PATH.getFilePath();
     private static final String salesPath = FilePath.SALES_PATH.getFilePath();
     private static final String medicinePath = FilePath.MEDICINE_PATH.getFilePath();
+    private static final String auditPath = FilePath.AUDIT_PATH.getFilePath();
 
     private final File usersFile = new File(usersPath);
     private final File salesFile = new File(salesPath);
