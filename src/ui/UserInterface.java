@@ -1,4 +1,5 @@
-package util; 
+package ui; 
+
 import java.util.ArrayList;
 import model.User;
 
