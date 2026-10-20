@@ -47,6 +47,14 @@ public class Sale extends Entity{
         this.voidedAt = voidedAt;
     }
 
+    public String toTextRow() {
+        String row = String.join("|", getID(), getCreatedAt().toString(), staffId, staffUsername, String.valueOf(voided), String.valueOf(voidedBy), String.valueOf(voidReason), String.valueOf(voidedAt));
+        for (SaleItem i : items) {
+            row += "|" + i.getMedicineId() + "|" + i.getMedicineName() + "|" + i.getUnitPrice() + "|" + i.getQuantity();
+        }
+        return row;
+    }
+
     public String getStaffId() { return staffId; }
     public String getStaffUsername() { return staffUsername; }
     public List<SaleItem> getItems() { return Collections.unmodifiableList(items); }
