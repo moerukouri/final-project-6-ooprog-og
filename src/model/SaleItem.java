@@ -13,9 +13,23 @@ public class SaleItem {
         this.quantity = quantity;
     }
 
-    public String getMedicineId() { return medicineId; }
-    public String getMedicineName() { return medicineName; }
-    public double getUnitPrice() { return unitPrice; }
-    public int getQuantity() { return quantity; }
-    public double getSubtotal() { return unitPrice * quantity; }
+    public String getMedicineId() {
+        return medicineId;
+    }
+
+    public String getMedicineName() {
+        return medicineName;
+    }
+
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getSubtotal() {
+        return unitPrice * quantity;
+    }
 }

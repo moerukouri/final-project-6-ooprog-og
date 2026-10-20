@@ -1,9 +1,12 @@
 package model;
 
-import java.time.LocalDateTime;
-
 public class Staff extends User{
-    public Staff(String id, LocalDateTime createdAt, String username, String password, String fullName, boolean status) {
-        super(id, createdAt, username, password, fullName, Role.STAFF, status);
+    public Staff(String userId, String username, String passwordHash, AccountStatus status) {
+        super(userId, username, passwordHash, status);
+    }
+
+    @Override 
+    public Role getRole() {
+        return Role.STAFF;
     }
 }
