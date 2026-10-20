@@ -15,6 +15,7 @@ public class FileCreator {
     private final File usersFile = new File(usersPath);
     private final File salesFile = new File(salesPath);
     private final File medicineFile = new File(medicinePath);
+    private final File auditFile = new File(auditPath);
 
 
     public FileCreator getInstance() {
@@ -48,6 +49,16 @@ public class FileCreator {
             }
         } catch (IOException e) {
             throw new FileStorageException(OperationType.CREATE.getOperation(), medicinePath);
+        }
+    }
+
+    public void createAuditFile() {
+        try {
+            if (auditFile.createNewFile()) {
+
+            }
+        } catch (IOException e) {
+            throw new FileStorageException(OperationType.CREATE.getOperation(), auditPath);
         }
     }
 }
