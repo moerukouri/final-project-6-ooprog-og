@@ -1,42 +1,54 @@
 package model;
 
-import java.time.LocalDateTime;
+public abstract class User {
+    private final String userId;
+    private String username;
+    private String passwordHash;
+    private AccountStatus status;
 
-public abstract class User extends Entity {
-    private final String username;
-    private final String password;
-    private final String fullName;   
-    private final Role role;
-    private boolean status;
+    protected User(String userId, String username, String passwordHash, AccountStatus status) {
+        this.userId = userId;
+        setUsername(username);
+        setPasswordHash(passwordHash);
+        setStatus(status);
+    }
 
-    protected User(String id, LocalDateTime createdAt, String username, String password, String fullName, Role role, boolean status) {
-        super(id, createdAt);
+    public String getUserId() {
+        return userId;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public AccountStatus getStatus() {
+        return status;
+    }
+
+    public final void setUsername(String username) {
         this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.role = role;
-        this.status = status;
     }
 
-    public String toTextRow() {
-        return String.join("|", getID(), getCreatedAt().toString(), username, password, fullName, role.name(), String.valueOf(status));
+    public final void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
-    public static User fromTextRow(String row) {
-        String[] parts = row.split("\\|");
-        if (parts.length != 7) {
-            return null;
-        }
-
-        Role role = Role.valueOf(parts[5]);
-        return role.createUser(parts[0], LocalDateTime.parse(parts[1]), parts[2], parts[3], parts[4], Boolean.parseBoolean(parts[6]));
+    public final void setStatus(AccountStatus status) {
+        this.status = status == null ? AccountStatus.ACTIVE : status;
     }
 
-    public void setAccountStatus(boolean status) { this.status = status; }
-    public String getUsername() { return this.username; }
-    public String getPasswordHash() { return this.passwordHash; }
-    public String getFullName() { return this.fullName; }
-    public Role getRole() { return this.role; }
-    public boolean getAccountStatus() { return this.status; }
+    public boolean isActive() {
+        return status == AccountStatus.ACTIVE;
+    }
+
+    public abstract Role getRole();
+    
+    @Override 
+    public String toString() {
+        return username + " (" + getRole() + ", " + status + ")";
+    }
 }
